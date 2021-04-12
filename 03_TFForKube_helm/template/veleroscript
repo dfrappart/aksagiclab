@@ -1,0 +1,7 @@
+velero install --provider azure --plugins velero/velero-plugin-for-microsoft-azure:v1.1.0 --bucket "velero" --secret-file ./velerocreds.tpl --backup-location-config resourceGroup="rsglabmeetupvelero",storageAccount="stvelerodfr" --snapshot-location-config resourceGroup="rsglabmeetupvelero",subscriptionId="16e85b36-5c9d-48cc-a45d-c672a4393c36"
+
+
+velero install --provider azure --plugins velero/velero-plugin-for-microsoft-azure:v1.1.0 --bucket "velero" --secret-file ./velerocreds.tpl --backup-location-config resourceGroup="rsglabmeetupvelero",storageAccount="stvelerodfr" --snapshot-location-config apiTimeout=2mn[,resourceGroup="rsglabmeetupvelero",subscriptionId="16e85b36-5c9d-48cc-a45d-c672a4393c36"]
+
+
+velero install --provider azure --plugins velero/velero-plugin-for-microsoft-azure:v1.1.0 --bucket "velero" --secret-file ./velerocreds.tpl --backup-location-config resourceGroup="rsglabmeetupvelero",storageAccount="stvelerodfr" --use-volume-snapshots=true --snapshot-location-config apiTimeout=5m,resourceGroup="rsglabmeetupvelero",subscriptionId="16e85b36-5c9d-48cc-a45d-c672a4393c36"

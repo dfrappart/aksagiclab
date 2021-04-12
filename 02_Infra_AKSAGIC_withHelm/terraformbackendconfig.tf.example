@@ -1,0 +1,11 @@
+##############################################
+#remote state config
+
+terraform {
+  backend "azurerm" {
+    storage_account_name = "" #storage account name for tf state
+    container_name       = "" #storage account container name, default to terraform
+    key                  = ".tfstate" #file.tfstate, used to store the state
+    access_key           = "" #the storage access key
+  }
+}

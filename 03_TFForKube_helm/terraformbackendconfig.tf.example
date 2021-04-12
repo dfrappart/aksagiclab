@@ -1,0 +1,12 @@
+##############################################
+#remote state config
+
+
+terraform {
+  backend "azurerm" {
+    storage_account_name = "<staname>"
+    container_name       = "<stacontainername>"
+    key                  = "<stringstate><env><subscription_id>"
+    access_key           = "<sta_access_key>"
+  }
+}
