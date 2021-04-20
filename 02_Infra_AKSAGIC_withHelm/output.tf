@@ -261,7 +261,10 @@ output "SpokeBastionFullOutput" {
   sensitive         = true
 }
 
-
+output "SpokeBastionPubIPFullOutput" {
+  value             = module.AKSVNet.SpokeBastionPubIPFullOutput
+  sensitive         = true
+}
 
 ######################################################
 # Output for the AKS module with RBAC enabled
@@ -557,5 +560,10 @@ output "AGWRG" {
 
 output "AGWName" {
   value             = module.AGW.AppGW.name
+  sensitive         = true
+}
+
+output "AppGWPubIP" {
+  value             = module.AGW.AppGWPubIP
   sensitive         = true
 }
