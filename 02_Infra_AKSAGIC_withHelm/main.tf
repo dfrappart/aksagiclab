@@ -92,6 +92,13 @@ locals {
       AppGwPublicCertificateSecretIdentifierSite    = data.azurerm_key_vault_secret.AGWCertForAGICSecret.id
       HostnameSite                                  = "aks.teknews.cloud"
     }
+
+    "Site 2" = {
+      SiteIdentifier                                = data.azurerm_key_vault_certificate.AGWCertForAGICCert2.name 
+      AppGWSSLCertNameSite                          = data.azurerm_key_vault_certificate.AGWCertForAGICCert2.name 
+      AppGwPublicCertificateSecretIdentifierSite    = data.azurerm_key_vault_secret.AGWCertForAGICSecret2.id
+      HostnameSite                                  = "lab.teknews.cloud"
+    }
   }
 }
 
@@ -257,3 +264,25 @@ SCHEMA
 
 }
 
+######################################################################
+# allow https on agw
+
+module "NSGRuleHTTPSAllow_FromInternetToAGW" {
+
+  #Module location
+  source = "../Modules/231_NSGRule/"
+
+  #Module variable
+  RuleSuffix                      = "HTTPSAllow_FromInternetToAGW"
+  RulePriority                    = 1010
+  RuleDirection                   = "Inbound"
+  RuleAccess                      = "Allow"
+  RuleProtocol                    = "Tcp"
+  RuleDestPorts                    = [80,443]
+  RuleSRCAddressPrefix            = "Internet"
+  RuleDestAddressPrefix           = "*"
+  TargetRG                        = module.ResourceGroup.RGName
+  TargetNSG                       = module.AKSVNet.AGWSubnetNSGFullOutput.name
+
+
+}
