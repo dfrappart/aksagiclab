@@ -312,3 +312,8 @@ output "Cert1Name" {
   value               = module.AKS_AGW_Cert_Wildcard[0].Full.name
   sensitive           = true
 }
+
+output "Cert2Name" {
+  value               = module.AKS_AGW_Cert_Wildcard[1].Full.name
+  sensitive           = true
+}
