@@ -79,3 +79,15 @@ data "azurerm_key_vault_secret" "AGWCertForAGICSecret" {
   name                        = data.terraform_remote_state.Subsetupstate.outputs.Cert1Name
   key_vault_id                = data.terraform_remote_state.Subsetupstate.outputs.AKSKeyVault_Id
 }
+
+data "azurerm_key_vault_certificate" "AGWCertForAGICCert2" {
+  name                        = data.terraform_remote_state.Subsetupstate.outputs.Cert2Name
+  key_vault_id                = data.terraform_remote_state.Subsetupstate.outputs.AKSKeyVault_Id
+}
+
+# also data sourcing the cert as a secret to get the secret identifier
+
+data "azurerm_key_vault_secret" "AGWCertForAGICSecret2" {
+  name                        = data.terraform_remote_state.Subsetupstate.outputs.Cert2Name
+  key_vault_id                = data.terraform_remote_state.Subsetupstate.outputs.AKSKeyVault_Id
+}
