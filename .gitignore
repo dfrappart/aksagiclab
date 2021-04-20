@@ -9,3 +9,7 @@ crash.log
 terraformbackendconfig.tf
 /02_PodIdentity_Yaml/PodId/*.yaml
 /02_PodIdentity_Yaml/SecretStore/*.yaml
+/11_Scripts
+/04_Velero
+/10_Tad
+/Modules
