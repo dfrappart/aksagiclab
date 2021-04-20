@@ -86,13 +86,13 @@ metadata:
   name: azurevoteingress
   annotations:
     kubernetes.io/ingress.class: azure/application-gateway
-    appgw.ingress.kubernetes.io/appgw-ssl-certificate: self-signed-aks-teknews-cloud
+    appgw.ingress.kubernetes.io/appgw-ssl-certificate: self-signed-lab-tek-news-cloud
 spec:
   tls:
     - hosts:
-      - votingapp.aks.teknews.cloud
+      - votingapp.lab.teknews.cloud
   rules:
-    - host: votingapp.aks.teknews.cloud  
+    - host: votingapp.lab.teknews.cloud  
       http:
         paths:
         - backend:
