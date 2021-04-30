@@ -285,3 +285,25 @@ resource "null_resource" "Install_AGIC_Addon" {
   ]
 }
 
+######################################################################
+# allow https on agw
+
+module "NSGRuleHTTPSAllow_FromInternetToAGW" {
+
+  #Module location
+  source = "../Modules/231_NSGRule/"
+
+  #Module variable
+  RuleSuffix                      = "HTTPSAllow_FromInternetToAGW"
+  RulePriority                    = 1010
+  RuleDirection                   = "Inbound"
+  RuleAccess                      = "Allow"
+  RuleProtocol                    = "Tcp"
+  RuleDestPorts                    = [80,443]
+  RuleSRCAddressPrefix            = "Internet"
+  RuleDestAddressPrefix           = "*"
+  TargetRG                        = module.ResourceGroup.RGName
+  TargetNSG                       = module.AKSVNet.AGWSubnetNSGFullOutput.name
+
+
+}
