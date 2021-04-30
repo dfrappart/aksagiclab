@@ -147,3 +147,22 @@ spec:
           # value: env
         ports:
         - containerPort: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: guestbook
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+    appgw.ingress.kubernetes.io/appgw-ssl-certificate: self-signed-aks-teknews-cloud
+spec:
+  tls:
+    - hosts:
+      - guestbook.aks.teknews.cloud
+  rules:
+    - host: guestbook.aks.teknews.cloud  
+      http:
+        paths:
+        - backend:
+            serviceName: frontend
+            servicePort: 80
