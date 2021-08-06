@@ -168,7 +168,7 @@ variable "Company" {
 variable "Project" {
   type                          = string
   description                   = "The name of the project"
-  default                       = "subsetup"
+  default                       = "subsetupagic"
 }
 
 variable "Environment" {
