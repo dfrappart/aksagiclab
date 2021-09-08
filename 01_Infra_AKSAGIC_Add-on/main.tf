@@ -40,7 +40,7 @@ module "AKSVNet" {
   #Module variable
   RGLogName                               = data.azurerm_resource_group.RGLog.name
   LawSubLogName                           = data.azurerm_log_analytics_workspace.LAWLog.name
-  STASubLogName                           = data.azurerm_storage_account.STALog.name
+  STALogId                                = data.azurerm_storage_account.STALog.id
   TargetRG                                = module.ResourceGroup.RGName
   TargetLocation                          = module.ResourceGroup.RGLocation
   VNetSuffix                              = var.ResourcesSuffix
@@ -103,6 +103,7 @@ module "AGW" {
   LawSubLogId                                   = data.azurerm_log_analytics_workspace.LAWLog.id
   STASubLogId                                   = data.azurerm_storage_account.STALog.id
   TargetSubnetId                                = module.AKSVNet.AGWSubnetFullOutput.id
+  TargetSubnetAddressPrefix                     = module.AKSVNet.AGWSubnetFullOutput.address_prefixes[0]
   KVId                                          = data.terraform_remote_state.Subsetupstate.outputs.AKSKeyVault_Id
   SitesConf                                     = local.SitesConf
 
@@ -270,12 +271,52 @@ SCHEMA
 }
 
 
+######################################################################
+# Add on agic through az cli
 
 resource "null_resource" "Install_AGIC_Addon" {
   #Use this resource to install AGI on CLI
   #count = local.agicaddonstatus == "false" ? 1 : 0
   provisioner "local-exec" {
     command = "az aks enable-addons -n ${module.AKS1.FullAKS.name} -g ${module.ResourceGroup.RGName} -a ingress-appgw --appgw-id ${module.AGW.AppGW.id}"
+  }
+
+  depends_on = [
+    module.AGW,
+    module.AKS1,
+    #null_resource.Test_AGIC_Addon
+  ]
+}
+
+
+
+######################################################################
+# Add on pod identity through az cli
+
+resource "null_resource" "Install_PodIdentity_Addon" {
+  #Use this resource to install AGI on CLI
+
+  provisioner "local-exec" {
+    command = "az aks update -n ${module.AKS1.FullAKS.name} -g ${module.ResourceGroup.RGName} --enable-pod-identity --enable-pod-identity-with-kubenet"
+  }
+
+  depends_on = [
+    module.AGW,
+    module.AKS1,
+    #null_resource.Test_AGIC_Addon
+  ]
+}
+
+
+
+######################################################################
+# Add on csi secret store through az cli
+
+resource "null_resource" "Install_CSISecretStore_Addon" {
+  #Use this resource to install AGI on CLI
+  #count = local.agicaddonstatus == "false" ? 1 : 0
+  provisioner "local-exec" {
+    command = "az aks enable-addons -n ${module.AKS1.FullAKS.name} -g ${module.ResourceGroup.RGName} -a azure-keyvault-secrets-provider"
   }
 
   depends_on = [
