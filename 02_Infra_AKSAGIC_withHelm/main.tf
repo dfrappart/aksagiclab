@@ -40,7 +40,7 @@ module "AKSVNet" {
   #Module variable
   RGLogName                               = data.azurerm_resource_group.RGLog.name
   LawSubLogName                           = data.azurerm_log_analytics_workspace.LAWLog.name
-  STASubLogName                           = data.azurerm_storage_account.STALog.name
+  STALogId                                = data.azurerm_storage_account.STALog.id
   TargetRG                                = module.ResourceGroup.RGName
   TargetLocation                          = module.ResourceGroup.RGLocation
   VNetSuffix                              = var.ResourcesSuffix
@@ -110,6 +110,7 @@ module "AGW" {
   LawSubLogId                                   = data.azurerm_log_analytics_workspace.LAWLog.id
   STASubLogId                                   = data.azurerm_storage_account.STALog.id
   TargetSubnetId                                = module.AKSVNet.AGWSubnetFullOutput.id
+  TargetSubnetAddressPrefix                     = module.AKSVNet.AGWSubnetFullOutput.address_prefixes[0]
   KVId                                          = data.terraform_remote_state.Subsetupstate.outputs.AKSKeyVault_Id
   AGWSuffix                                     = var.ResourcesSuffix
   SitesConf                                     = local.SitesConf
@@ -123,26 +124,6 @@ module "AGW" {
   Environment                                   = var.Environment
 
 }
-
-/*
-######################################################################
-# Requirement for monitoring
-######################################################################
-######################################################################
-# Mapping OMS UAI to Azure monitor publisher role
-
-module "AssignAKS_SAI_NTWContributor_To_RGVNet" {
-
-  #Module Location
-  source                                  = "github.com/dfrappart/Terra-AZModuletest//Modules_building_blocks/401_RBACAssignment_BuiltinRole/"
-
-  #Module variable
-  RBACScope                               = module.ResourceGroup.RGId
-  BuiltinRoleName                         = "Monitoring Metrics Publisher"
-  ObjectId                                = module.AKS1.FullAKS.addon_profile[0].oms_agent[0].oms_agent_identity[0].object_id
-
-}
-*/
 
 ######################################################################
 # Requirement for Pod Identity
@@ -253,12 +234,18 @@ resource "azurerm_logic_app_trigger_http_request" "example" {
 
   schema = <<SCHEMA
 {
-    "type": "object",
-    "properties": {
-        "hello": {
-            "type": "string"
-        }
-    }
+  "properties": {
+      "Channel": {
+          "type": "string"
+      },
+      "Text": {
+          "type": "string"
+      },
+      "Username": {
+          "type": "string"
+      }
+  },
+  "type": "object"
 }
 SCHEMA
 
