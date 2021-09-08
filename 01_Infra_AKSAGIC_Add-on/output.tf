@@ -30,24 +30,6 @@ output "RGId" {
 ######################################################
 
 ##############################################################
-#Output for the storage account log
-
-output "STALogsFullOutput" {
-  value             = module.AKSVNet.STALogsFullOutput
-  sensitive         = true
-}
-
-
-##############################################################
-#Output Log analytics workspace
-
-output "LAWFullOutput" {
-  value             = module.AKSVNet.LAWFullOutput
-  sensitive         = true
-}
-
-
-##############################################################
 #Output for the VNet
 
 output "VNetFullOutput" {
@@ -556,3 +538,21 @@ output "AGWName" {
   value             = module.AGW.AppGW.name
   sensitive         = true
 }
+
+/*
+######################################################################
+# Azure policy test
+
+output "policyoutput" {
+  value             = data.azurerm_policy_definition.DenyResource
+}
+
+output "testjson_to_hcl" {
+  value             = jsondecode(file("./policy_sample/policyparam.json"))
+}
+
+output "testhcl_to_json" {
+  value             = jsonencode(file("./policy_sample/policyparam.txt"))
+}
+
+*/
