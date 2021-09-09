@@ -134,7 +134,7 @@ variable "kubecontext" {
 variable "kuredChartVer" {
   type                          = string
   description                   = "The version of the chart"
-  default                       = "2.3.1"
+  default                       = "2.8.0"
 }
 
 variable "HelmKuredSensitiveParamName" {
@@ -224,7 +224,7 @@ variable "HelmKuredParam" {
 variable "PodIdChartVer" {
   type                          = string
   description                   = "The version of the chart"
-  default                       = "3.0.2"
+  default                       = "4.1.3"
 }
 
 variable "HelmPodIdentityParam" {
@@ -253,30 +253,8 @@ variable "HelmPodIdentityParam" {
 variable "AgicChartVer" {
   type                          = string
   description                   = "The version of the chart"
-  default                       = "1.3.0"
+  default                       = "1.4.0"
 }
-
-/*
-variable "HelmAGICParam" {
-  type                  = map
-  description            = "A map used to feed the dynamic blocks of the pod identity helm chart"
-  default                = {
-
-      "set1" = {
-        ParamName             = "nmi.allowNetworkPluginKubenet"
-        ParamValue            = "true"
-
-    }
-      "set2" = {
-        ParamName             = "installCRDs"
-        ParamValue            = "true"
-
-    }
-
-  }
-
-}
-*/
 
 ##############################################################
 #Variable declaration for helm cert manager set
@@ -299,5 +277,26 @@ variable "HelmCertManagerParam" {
     }
 
   }
+
+}
+
+##############################################################
+#Variable declaration for helm kubecost set
+
+variable "kubecostChartVer" {
+  type                          = string
+  description                   = "The version of the chart"
+  default                       = "1.84.0"
+}
+
+variable "HelmkubecostSensitiveParamName" {
+  type                          = string
+  description                   = "The parameter for the helm chart to define the token" 
+  default                       = ""
+}
+
+variable "HelmKubeCostSensitiveParamValue" {
+  type                          = string
+  description                   = "The token value used by kubecost" 
 
 }
