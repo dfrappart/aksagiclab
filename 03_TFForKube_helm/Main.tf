@@ -172,6 +172,8 @@ resource "helm_release" "podidentity" {
   repository                          = "https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts"
   chart                               = "aad-pod-identity"
   version                             = var.PodIdChartVer
+  namespace                           = "podidentity"
+  create_namespace                    = true
 
 
   dynamic "set" {
@@ -253,3 +255,66 @@ resource "helm_release" "certmanager" {
   ]
 
 }
+
+
+######################################################################
+# installing Kubecost from helm
+
+resource "helm_release" "kubecost" {
+  name                                = "kubecost"
+  repository                          = "https://kubecost.github.io/cost-analyzer/"
+  chart                               = "cost-analyzer"
+  version                             = var.kubecostChartVer
+  namespace                           = "kubecost"
+  create_namespace                    = true
+
+  set_sensitive {
+    name                              = var.HelmkubecostSensitiveParamName
+    value                             = var.HelmKubeCostSensitiveParamValue
+  }
+
+
+
+}
+
+/*
+######################################################################
+# installing Velero from helm
+
+data "template_file" "veleroyamlconfig" {
+  template                                 = file("./template/veleroyamlconfig.yaml")
+  vars = {
+    subid                                   = data.azurerm_subscription.current.subscription_id
+    rgname                                  = data.azurerm_resource_group.AKSRG.name
+    agicname                                = data.terraform_remote_state.AKSClus1.outputs.AGWName
+    PodIdentityId                           = module.UAIAGIC.FullUAIOutput.id
+    PodIdentityclientId                     = module.UAIAGIC.FullUAIOutput.client_id
+    IsRBACEnabled                           = true
+  }
+
+}
+
+resource "helm_release" "velero" {
+  name                                = "cert-manager"
+  repository                          = "https://charts.jetstack.io"
+  chart                               = "cert-manager"
+  version                             = var.VeleroChartVer
+  namespace                           = "certmanager"
+  create_namespace                    = true
+
+  dynamic "set" {
+    for_each                          = var.HelmCertManagerParam
+    iterator                          = each
+    content {
+      name                            = each.value.ParamName
+      value                           = each.value.ParamValue
+    }
+
+  }
+
+  depends_on = [
+    helm_release.kured
+  ]
+
+}
+*/
