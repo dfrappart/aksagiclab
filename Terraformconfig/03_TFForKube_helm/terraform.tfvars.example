@@ -1,0 +1,19 @@
+######################################################
+# parameters definition
+######################################################
+
+
+
+# Azure Provider Configuration
+
+AzureSubscriptionID                 = ""
+AzureClientID                       = ""
+AzureClientSecret                   = ""
+AzureTenantID                       = ""
+
+# Data source for Kube provider
+
+statestoa                           = ""
+statecontainer                      = ""
+statestoakey                        = ""
+statekeyAKSClus1State               = ""
