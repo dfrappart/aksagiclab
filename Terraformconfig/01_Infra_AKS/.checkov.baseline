@@ -1,0 +1,106 @@
+{
+    "failed_checks": [
+        {
+            "file": "/yamltemplate\\TestPod-template-csiaddon.yaml",
+            "findings": [
+                {
+                    "resource": "Pod.${PodName}.default",
+                    "check_ids": [
+                        "CKV_K8S_21",
+                        "CKV_K8S_23",
+                        "CKV_K8S_29",
+                        "CKV_K8S_31",
+                        "CKV_K8S_38",
+                        "CKV_K8S_40"
+                    ]
+                },
+                {
+                    "resource": "Pod.${PodName}.default (container 0) - nginx",
+                    "check_ids": [
+                        "CKV_K8S_10",
+                        "CKV_K8S_11",
+                        "CKV_K8S_12",
+                        "CKV_K8S_13",
+                        "CKV_K8S_14",
+                        "CKV_K8S_20",
+                        "CKV_K8S_22",
+                        "CKV_K8S_28",
+                        "CKV_K8S_30",
+                        "CKV_K8S_37",
+                        "CKV_K8S_43",
+                        "CKV_K8S_8",
+                        "CKV_K8S_9"
+                    ]
+                }
+            ]
+        },
+        {
+            "file": "/yamltemplate\\TestPod-template-secretsync.yaml",
+            "findings": [
+                {
+                    "resource": "Pod.${PodName}.default",
+                    "check_ids": [
+                        "CKV_K8S_21",
+                        "CKV_K8S_23",
+                        "CKV_K8S_29",
+                        "CKV_K8S_31",
+                        "CKV_K8S_38",
+                        "CKV_K8S_40"
+                    ]
+                },
+                {
+                    "resource": "Pod.${PodName}.default (container 0) - nginx",
+                    "check_ids": [
+                        "CKV_K8S_10",
+                        "CKV_K8S_11",
+                        "CKV_K8S_12",
+                        "CKV_K8S_13",
+                        "CKV_K8S_14",
+                        "CKV_K8S_20",
+                        "CKV_K8S_22",
+                        "CKV_K8S_28",
+                        "CKV_K8S_30",
+                        "CKV_K8S_37",
+                        "CKV_K8S_43",
+                        "CKV_K8S_8",
+                        "CKV_K8S_9"
+                    ]
+                }
+            ]
+        },
+        {
+            "file": "/yamltemplate\\TestPod-template.yaml",
+            "findings": [
+                {
+                    "resource": "Pod.${PodName}.default",
+                    "check_ids": [
+                        "CKV_K8S_21",
+                        "CKV_K8S_23",
+                        "CKV_K8S_29",
+                        "CKV_K8S_31",
+                        "CKV_K8S_38",
+                        "CKV_K8S_40"
+                    ]
+                },
+                {
+                    "resource": "Pod.${PodName}.default (container 0) - nginx",
+                    "check_ids": [
+                        "CKV_K8S_10",
+                        "CKV_K8S_11",
+                        "CKV_K8S_12",
+                        "CKV_K8S_13",
+                        "CKV_K8S_14",
+                        "CKV_K8S_20",
+                        "CKV_K8S_22",
+                        "CKV_K8S_28",
+                        "CKV_K8S_30",
+                        "CKV_K8S_37",
+                        "CKV_K8S_43",
+                        "CKV_K8S_8",
+                        "CKV_K8S_9"
+                    ]
+                }
+            ]
+        }
+    ]
+}

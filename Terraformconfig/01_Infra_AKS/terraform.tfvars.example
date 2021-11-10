@@ -1,0 +1,17 @@
+######################################################################
+# config variables 
+######################################################################
+
+#Provider variable
+
+AzureSubscriptionID                     = ""
+AzureClientID                           = ""
+AzureClientSecret                       = ""
+AzureTenantID                           = ""
+
+RGLogName                               = ""
+LawSubLogName                           = ""
+STASubLogName                           = ""
+
+AKSClusterAdminsIds                     = ""
+AKSSSHKey                               = ""

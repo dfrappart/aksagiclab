@@ -1,0 +1,205 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Extract_Env_Tag": {
+                "inputs": {
+                    "content": "@body('Get_all_AKS_clusters')",
+                    "schema": {
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                "location": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "tags": {
+                                    "properties": {
+                                        "Environment": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "required": [
+                                "id",
+                                "name",
+                                "location",
+                                "tags"
+                            ],
+                            "type": "object"
+                        },
+                        "type": "array"
+                    }
+                },
+                "runAfter": {
+                    "Get_all_AKS_clusters": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ParseJson"
+            },
+            "For_each_AKS_Cluster": {
+                "actions": {
+                    "Extract_AKS_Cluster_Name_from_resource_Id": {
+                        "inputs": "@split(outputs('Get_resource_ID'), '/')[8]",
+                        "runAfter": {
+                            "Extract_RG_from_resource_Id": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "Compose"
+                    },
+                    "Extract_RG_from_resource_Id": {
+                        "inputs": "@split(outputs('Get_resource_ID'), '/')[4]",
+                        "runAfter": {
+                            "Get_Resource_Id": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "Compose"
+                    },
+                    "Get_Resource_Id": {
+                        "inputs": "@items('For_each_AKS_Cluster')?['id']",
+                        "runAfter": {},
+                        "type": "Compose"
+                    },
+                    "Stop_AKS_Cluster": {
+                        "inputs": {
+                            "host": {
+                                "connection": {
+                                    "name": "@parameters('$connections')['arm']['connectionId']"
+                                }
+                            },
+                            "method": "post",
+                            "path": "/subscriptions/@{encodeURIComponent('$SubId')}/resourcegroups/@{encodeURIComponent(outputs('Extract_RG_from_resource_Id'))}/providers/@{encodeURIComponent('Microsoft.ContainerService')}/@{encodeURIComponent('ManagedClusters/',outputs('Extract_AKS_Cluster_Name_from_resource_Id'))}/@{encodeURIComponent('stop')}",
+                            "queries": {
+                                "x-ms-api-version": "2021-05-01"
+                            }
+                        },
+                        "runAfter": {
+                            "Extract_AKS_Cluster_Name_from_resource_Id": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "ApiConnection"
+                    }
+                },
+                "foreach": "@body('Get_only_non_Prd_AKS_Cluster')",
+                "runAfter": {
+                    "Get_only_non_Prd_AKS_Cluster": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Foreach"
+            },
+            "Get_all_AKS_clusters": {
+                "inputs": {
+                    "from": "@body('List_all_resources')?['value']",
+                    "where": "@equals(item()?['type'], 'Microsoft.ContainerService/managedClusters')"
+                },
+                "runAfter": {
+                    "List_all_resources": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Query"
+            },
+            "Get_only_non_Prd_AKS_Cluster": {
+                "inputs": {
+                    "from": "@body('Extract_Env_Tag')",
+                    "where": "@not(equals(item()?['tags']?['Environment'], 'prd'))"
+                },
+                "runAfter": {
+                    "Extract_Env_Tag": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Query"
+            },
+            "List_all_resources": {
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['arm']['connectionId']"
+                        }
+                    },
+                    "method": "get",
+                    "path": "/subscriptions/@{encodeURIComponent('$SubId')}/resources",
+                    "queries": {
+                        "x-ms-api-version": "2016-06-01"
+                    }
+                },
+                "runAfter": {},
+                "type": "ApiConnection"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "defaultValue": {},
+                "type": "Object"
+            }
+        },
+        "triggers": {
+            "Recurrence": {
+                "evaluatedRecurrence": {
+                    "frequency": "Week",
+                    "interval": 1,
+                    "schedule": {
+                        "hours": [
+                            "18"
+                        ],
+                        "minutes": [
+                            0
+                        ],
+                        "weekDays": [
+                            "Monday",
+                            "Tuesday",
+                            "Wednesday",
+                            "Thursday",
+                            "Friday"
+                        ]
+                    }
+                },
+                "recurrence": {
+                    "frequency": "Week",
+                    "interval": 1,
+                    "schedule": {
+                        "hours": [
+                            "18"
+                        ],
+                        "minutes": [
+                            0
+                        ],
+                        "weekDays": [
+                            "Monday",
+                            "Tuesday",
+                            "Wednesday",
+                            "Thursday",
+                            "Friday"
+                        ]
+                    }
+                },
+                "type": "Recurrence"
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "value": {
+                "arm": {
+                    "connectionId": "/subscriptions/$SubId/resourceGroups/$rsgname/providers/Microsoft.Web/connections/arm",
+                    "connectionName": "arm",
+                    "id": "/subscriptions/$SubId/providers/Microsoft.Web/locations/westeurope/managedApis/arm"
+                }
+            }
+        }
+    }
+}

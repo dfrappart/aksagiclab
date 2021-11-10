@@ -1,0 +1,19 @@
+######################################################################
+# config variables 
+######################################################################
+
+######################################################################
+#Provider variable
+
+AzureSubscriptionID                 = ""
+AzureClientID                       = ""
+AzureClientSecret                   = ""
+AzureTenantID                       = ""
+
+
+
+#Observability Basics variables
+ASCPricingTier                      = "Standard"
+IsDeploymentTypeGreenField           = true
+ASCContactMail                      = ""
+SubContactList                      = ""

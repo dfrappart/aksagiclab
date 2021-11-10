@@ -1,0 +1,91 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Parse_JSON": {
+                "inputs": {
+                    "content": "@triggerBody()",
+                    "schema": {
+                        "properties": {
+                            "Channel": {
+                                "type": "string"
+                            },
+                            "Text": {
+                                "type": "string"
+                            },
+                            "Username": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "runAfter": {},
+                "type": "ParseJson"
+            },
+            "Post_a_message_(V3)": {
+                "inputs": {
+                    "body": {
+                        "body": {
+                            "content": "<p>Kubernetes Reboot Daemon action has been triggered: <br>\n<br>\n@{triggerBody()['Text']}</p>",
+                            "contentType": "html"
+                        }
+                    },
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['teams']['connectionId']"
+                        }
+                    },
+                    "method": "post",
+                    "path": "/v3/beta/teams/@{encodeURIComponent('3c8d9d59-5ba3-4afb-ac65-a0e20635b853')}/channels/@{encodeURIComponent('19:70625a872dfa4cc1a0195d767f879612@thread.skype')}/messages"
+                },
+                "runAfter": {
+                    "Parse_JSON": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ApiConnection"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "parameters": {
+            "$connections": {
+                "defaultValue": {},
+                "type": "Object"
+            }
+        },
+        "triggers": {
+            "some-http-trigger": {
+                "inputs": {
+                    "schema": {
+                        "properties": {
+                            "Channel": {
+                                "type": "string"
+                            },
+                            "Text": {
+                                "type": "string"
+                            },
+                            "Username": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "kind": "Http",
+                "type": "Request"
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "value": {
+                "teams": {
+                    "connectionId": "/subscriptions/$SubId/resourceGroups/$rsgname/providers/Microsoft.Web/connections/teams",
+                    "connectionName": "teams",
+                    "id": "/subscriptions/$SubId/providers/Microsoft.Web/locations/westeurope/managedApis/teams"
+                }
+            }
+        }
+    }
+}
