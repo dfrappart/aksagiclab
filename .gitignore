@@ -13,3 +13,6 @@ terraformbackendconfig.tf
 /04_Velero
 /10_Tad
 /Modules
+backend.hcl
+/armextract/
+
