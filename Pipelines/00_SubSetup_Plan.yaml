@@ -1,0 +1,156 @@
+#Pipeline name
+
+name: '00_SubSetup_Plan'
+
+
+#Parameters for the pipeline
+
+# CD Trigger
+
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - Terraformconfig/00_SubSetup/*
+    - Modules/*
+
+# Job Workers config
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+# Variables for the job
+
+variables:
+- group: AgicLab
+- group: AgicLabKV
+
+# Stages
+
+stages:
+  - stage: terraform_plan_stage
+    jobs: 
+    - job: terraform_plan
+      continueOnError: false
+      # Job step
+      steps:
+      
+      - script: |
+         echo Getting Terraform
+         echo "Building TFURI for DL"
+         echo "current terraform version is $TFVer"
+         export TFuri1="https://releases.hashicorp.com/terraform/$TFVer/terraform_"
+         export TFuriTemp=$TFuri1$TFVer
+         export TFuriend="_linux_amd64.zip"
+         export TFuri=$TFuriTemp$TFuriend
+         echo "TFDL URI is $TFuri"
+         wget $TFuri
+         
+         echo "building TFZip name"
+         export TFZip1="terraform_"
+         export TFZipEnd="_linux_amd64.zip"
+         export TFZipTemp=$TFZip1$TFVer
+         export ZIPName=$TFZipTemp$TFZipEnd
+         echo "Zip name is $ZIPName"
+         unzip -a $ZIPName
+         
+         sudo mv ./terraform /usr/local/bin/terraform
+         
+         terraform version
+         
+        displayName: 'Download and update Terraform'
+        env:
+          TFVer: $(TFVer)
+      
+      - script: |
+         echo '######################################################'   
+         echo 'Init and plan Terraform'
+         echo '######################################################'
+         echo
+         echo '######################################################'    
+         echo 'Init Terraform'
+         echo
+         terraform init \
+         -backend-config="key=${key}" \
+         -backend-config="access_key=${access_key}" \
+         -backend-config="container_name=${container_name}" \
+         -backend-config="storage_account_name=${storage_account_name}" \
+         -no-color
+         echo 'State is stored in:'${key}
+         echo
+         echo '######################################################'
+         echo 'check terraform'
+         terraform version
+         echo
+         echo 'check files'
+         ls -a
+         echo 'Plan Terraform'
+         echo
+         terraform plan -var-file="Lab.tfvars" -var AzureSubscriptionID=${AzureSubscriptionID} -var AzureTenantID=${AzureTenantID} -var AzureClientSecret=${AzureClientSecret} -var AzureClientID=${AzureClientID} -input=false
+     
+    
+        workingDirectory: 'Terraformconfig/00_SubSetup'
+        displayName: 'Terraform init & Plan'
+        env:
+          AzureClientID: $(TFId)
+          AzureClientSecret: $(TFSecret)
+          AzureSubscriptionID: $(SubscriptionId)
+          AzureTenantID: $(TenantId)
+          key: $(SubSetupState)
+          access_key: $(TFStateSTOAK)
+          container_name: $(SubSetupContainerName)
+          storage_account_name: $(SubSetupSTAName)
+
+      - script: |
+         echo Getting Checkov
+
+         sudo apt update
+         sudo apt install software-properties-common
+         sudo add-apt-repository ppa:deadsnakes/ppa
+         sudo apt install python3.7
+         sudo apt install python3-pip
+         sudo python3.7 -m pip install -U checkov #to install or upgrade checkov)
+         
+        displayName: 'Install Checkov'
+
+      - script: |
+         echo '######################################################'   
+         echo 'Checkov scan in directory '
+         echo '######################################################'
+         echo
+         checkov --directory . --quiet --soft-fail
+#--baseline ./.checkov.baseline
+         
+#         echo '######################################################'   
+#         echo 'Checkov scan from previous plan '
+#         echo '######################################################'
+#         echo
+#         terraform show -json tf.plan  > tf.json
+#         checkov -f ./tf.json --baseline ./.checkov.baseline     
+    
+        workingDirectory: 'Terraformconfig/00_SubSetup'
+        displayName: 'Checkov Scan'
+
+      - script: |
+         echo Getting tfsec
+
+         wget https://tfsec.dev/assets/signing.asc
+         wget https://github.com/aquasecurity/tfsec/releases/download/v0.58.14/tfsec-linux-amd64
+         wget https://github.com/aquasecurity/tfsec/releases/download/v0.58.14/tfsec-linux-amd64.D66B222A3EA4C25D5D1A097FC34ACEFB46EC39CE.sig
+         cat signing.asc > /tmp/tfsec_key.txt
+         gpg --import < /tmp/tfsec_key.txt
+         gpg --list-keys signing@tfsec.dev
+         sudo install tfsec-linux-amd64 /usr/local/bin/tfsec 
+         
+        displayName: 'Install tfsec'
+
+      - script: |
+         echo '######################################################'   
+         echo 'tfsec scan in directory '
+         echo '######################################################'
+         echo
+         tfsec . -s
+        workingDirectory: 'Terraformconfig/00_SubSetup'
+        displayName: 'tfsec Scan'
