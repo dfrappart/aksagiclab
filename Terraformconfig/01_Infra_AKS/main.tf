@@ -157,6 +157,30 @@ module "AGW" {
 
 }
 
+
+######################################################################
+# allow https on agw
+
+module "NSGRuleHTTPSAllow_FromInternetToAGW" {
+  count                           = 2
+  #Module location
+  source = "../../Modules/231_NSGRule/"
+
+  #Module variable
+  RuleSuffix                      = "HTTPSAllow_FromInternetToAGW"
+  RulePriority                    = 1010
+  RuleDirection                   = "Inbound"
+  RuleAccess                      = "Allow"
+  RuleProtocol                    = "Tcp"
+  RuleDestPorts                    = [80,443]
+  RuleSRCAddressPrefix            = "Internet"
+  RuleDestAddressPrefix           = "*"
+  TargetRG                        = module.ResourceGroup[count.index].RGName
+  TargetNSG                       = module.AKSVNet[count.index].AGWSubnetNSGFullOutput.name
+
+
+}
+
 ######################################################################
 # Requirement for Pod Identity
 ######################################################################
