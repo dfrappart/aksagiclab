@@ -43,7 +43,7 @@ variable "statestoakey" {
   description = "The storage access key of the storage account"
 }
 
-variable "statekeyAKSClus1State" {
+variable "statekeyAKSClusState" {
   type    = string
   description = "the name of the file containing the state of the 02 Azure Autmation setup configuration"
 }
@@ -119,13 +119,15 @@ variable "AzureTenantID" {
 
 variable "kubepath" {
   type                          = string
-  description                   = "The Application secret"
+  description                   = "The path to kube config"
+  default                       = "" 
 
 }
 
 variable "kubecontext" {
   type                          = string
-  description                   = "The Azure AD tenant ID"
+  description                   = "The kubernetes context to use if using it for authentication"
+  default                       = ""
 }
 
 ##############################################################
@@ -134,7 +136,7 @@ variable "kubecontext" {
 variable "kuredChartVer" {
   type                          = string
   description                   = "The version of the chart"
-  default                       = "2.9.1"
+  default                       = "2.10.0"
 }
 
 variable "HelmKuredSensitiveParamName" {
@@ -224,7 +226,7 @@ variable "HelmKuredParam" {
 variable "PodIdChartVer" {
   type                          = string
   description                   = "The version of the chart"
-  default                       = "4.1.5"
+  default                       = "4.1.6"
 }
 
 variable "HelmPodIdentityParam" {

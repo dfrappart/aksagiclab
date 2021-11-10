@@ -34,34 +34,39 @@ data "terraform_remote_state" "Subsetupstate" {
 
 #Data source for remote state
 
-data "terraform_remote_state" "AKSClus1" {
+data "terraform_remote_state" "AKSClus" {
   backend   = "azurerm"
   config    = {
     storage_account_name = var.statestoa
     container_name       = var.statecontainer
-    key                  = var.statekeyAKSClus1State
+    key                  = var.statekeyAKSClusState
     access_key           = var.statestoakey
   }
 }
 
 
 data "azurerm_resource_group" "AKSRG" {
-  name                  = data.terraform_remote_state.AKSClus1.outputs.RGName
+  name                  = data.terraform_remote_state.AKSClus.outputs.RG2_Name
 }
 
 data "azurerm_subnet" "AKSSubnet" {
-  name                  = data.terraform_remote_state.AKSClus1.outputs.FESubnetName
-  virtual_network_name  = data.terraform_remote_state.AKSClus1.outputs.VNetName
+  name                  = data.terraform_remote_state.AKSClus.outputs.FESubnet_VNet2_Name
+  virtual_network_name  = data.terraform_remote_state.AKSClus.outputs.VNet2_Name
   resource_group_name   = data.azurerm_resource_group.AKSRG.name
 }
 
 data "azurerm_subnet" "AGWSubnet" {
-  name                  = data.terraform_remote_state.AKSClus1.outputs.AGWSubnetName
-  virtual_network_name  = data.terraform_remote_state.AKSClus1.outputs.VNetName
+  name                  = data.terraform_remote_state.AKSClus.outputs.AGWSubnet_VNet2_FullOutput.name
+  virtual_network_name  = data.terraform_remote_state.AKSClus.outputs.VNet2_Name
   resource_group_name   = data.azurerm_resource_group.AKSRG.name
 }
 
 data "azurerm_kubernetes_cluster" "AKSCluster" {
-  name                  = data.terraform_remote_state.AKSClus1.outputs.FullAKS.name
+  name                  = data.terraform_remote_state.AKSClus.outputs.FullAKS2.name
+  resource_group_name   = data.azurerm_resource_group.AKSRG.name
+}
+
+data "azurerm_application_gateway" "AGW" {
+  name                  = data.terraform_remote_state.AKSClus.outputs.AGW2Name
   resource_group_name   = data.azurerm_resource_group.AKSRG.name
 }

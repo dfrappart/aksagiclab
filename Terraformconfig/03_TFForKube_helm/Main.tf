@@ -1,15 +1,14 @@
 ######################################################################
-# Webshop K8S + Storage resources
+# backend block for partial configuration
 ######################################################################
+
+terraform {
+  backend "azurerm" {}
+}
 
 ######################################################################
 # Access to terraform
 ######################################################################
-
-terraform {
-
-  #backend "azurerm" {}
-}
 
 provider "azurerm" {
   subscription_id         = var.AzureSubscriptionID
@@ -73,12 +72,12 @@ locals {
     }
       "set2" = {
         ParamName             = "appgw.applicationGatewayID"
-        ParamValue            = data.terraform_remote_state.AKSClus1.outputs.AGWId
+        ParamValue            = data.azurerm_application_gateway.AGW.id
 
     }
       "set3" = {
         ParamName             = "appgw.resourceGroup"
-        ParamValue            = data.terraform_remote_state.AKSClus1.outputs.AGWRG
+        ParamValue            = data.azurerm_resource_group.AKSRG.name
 
     }
       "set4" = {
@@ -201,7 +200,7 @@ data "template_file" "agicyamlconfig" {
   vars = {
     subid                                   = data.azurerm_subscription.current.subscription_id
     rgname                                  = data.azurerm_resource_group.AKSRG.name
-    agicname                                = data.terraform_remote_state.AKSClus1.outputs.AGWName
+    agicname                                = data.terraform_remote_state.AKSClus.outputs.AGW2Name
     PodIdentityId                           = module.UAIAGIC.FullUAIOutput.id
     PodIdentityclientId                     = module.UAIAGIC.FullUAIOutput.client_id
     IsRBACEnabled                           = true
@@ -286,7 +285,7 @@ data "template_file" "veleroyamlconfig" {
   vars = {
     subid                                   = data.azurerm_subscription.current.subscription_id
     rgname                                  = data.azurerm_resource_group.AKSRG.name
-    agicname                                = data.terraform_remote_state.AKSClus1.outputs.AGWName
+    agicname                                = data.terraform_remote_state.AKSClus.outputs.AGWName
     PodIdentityId                           = module.UAIAGIC.FullUAIOutput.id
     PodIdentityclientId                     = module.UAIAGIC.FullUAIOutput.client_id
     IsRBACEnabled                           = true
