@@ -16,6 +16,6 @@ To apply the configuration, run the following command:
   
 ```bash
 
-terraform apply
+terraform apply -var-file="Lab.tfvars"
 
 ```
