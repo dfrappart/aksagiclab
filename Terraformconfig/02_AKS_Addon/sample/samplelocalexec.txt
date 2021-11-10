@@ -1,6 +1,6 @@
 null_resource.Install_AGIC_Addon: Creating...
 null_resource.Install_AGIC_Addon: Provisioning with 'local-exec'...
-null_resource.Install_AGIC_Addon (local-exec): Executing: ["cmd" "/C" "az aks enable-addons -n aks-1 -g rsgagicmeetup1 -a ingress-appgw --appgw-id /subscriptions/16e85b36-5c9d-48cc-a45d-c672a4393c36/resourceGroups/rsgagicmeetup1/providers/Microsoft.Network/applicationGateways/agwagicmeetup1"]
+null_resource.Install_AGIC_Addon (local-exec): Executing: ["cmd" "/C" "az aks enable-addons -n aks-1 -g rsgagicmeetup1 -a ingress-appgw --appgw-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rsgagicmeetup1/providers/Microsoft.Network/applicationGateways/agwagicmeetup1"]
 null_resource.Install_AGIC_Addon (local-exec): WARNING: The behavior of this command has been altered by the following extension: aks-preview
 null_resource.Install_AGIC_Addon: Still creating... [10s elapsed]
 null_resource.Install_AGIC_Addon: Still creating... [20s elapsed]
@@ -23,16 +23,16 @@ null_resource.Install_AGIC_Addon (local-exec):     "enableAzureRbac": false,
 null_resource.Install_AGIC_Addon (local-exec):     "managed": true,
 null_resource.Install_AGIC_Addon (local-exec):     "serverAppId": null,
 null_resource.Install_AGIC_Addon (local-exec):     "serverAppSecret": null,
-null_resource.Install_AGIC_Addon (local-exec):     "tenantId": "e0c45235-95fe-4bd6-96ca-2d529f0ebde4"
+null_resource.Install_AGIC_Addon (local-exec):     "tenantId": "00000000-0000-0000-0000-000000000000"
 null_resource.Install_AGIC_Addon (local-exec):   },
 null_resource.Install_AGIC_Addon (local-exec):   "addonProfiles": {
 null_resource.Install_AGIC_Addon (local-exec):     "azurepolicy": {
 null_resource.Install_AGIC_Addon (local-exec):       "config": null,
 null_resource.Install_AGIC_Addon (local-exec):       "enabled": true,
 null_resource.Install_AGIC_Addon (local-exec):       "identity": {
-null_resource.Install_AGIC_Addon (local-exec):         "clientId": "dc5e9029-4aed-4acb-a417-fe16b5862475",
-null_resource.Install_AGIC_Addon (local-exec):         "objectId": "231fe739-10c5-4359-a10c-2f4e50c804e8",
-null_resource.Install_AGIC_Addon (local-exec):         "resourceId": "/subscriptions/16e85b36-5c9d-48cc-a45d-c672a4393c36/resourcegroups/rsg-dfitcfr-lab-agic-aksobjects1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/azurepolicy-aks-1"
+null_resource.Install_AGIC_Addon (local-exec):         "clientId": "00000000-0000-0000-0000-000000000000",
+null_resource.Install_AGIC_Addon (local-exec):         "objectId": "00000000-0000-0000-0000-000000000000",
+null_resource.Install_AGIC_Addon (local-exec):         "resourceId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rsg-dfitcfr-lab-agic-aksobjects1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/azurepolicy-aks-1"
 null_resource.Install_AGIC_Addon (local-exec):       }
 null_resource.Install_AGIC_Addon (local-exec):     },
 null_resource.Install_AGIC_Addon (local-exec):     "httpApplicationRouting": {
@@ -42,14 +42,14 @@ null_resource.Install_AGIC_Addon (local-exec):       "identity": null
 null_resource.Install_AGIC_Addon (local-exec):     },
 null_resource.Install_AGIC_Addon (local-exec):     "ingressApplicationGateway": {
 null_resource.Install_AGIC_Addon (local-exec):       "config": {
-null_resource.Install_AGIC_Addon (local-exec):         "applicationGatewayId": "/subscriptions/16e85b36-5c9d-48cc-a45d-c672a4393c36/resourceGroups/rsgagicmeetup1/providers/Microsoft.Network/applicationGateways/agwagicmeetup1",
-null_resource.Install_AGIC_Addon (local-exec):         "effectiveApplicationGatewayId": "/subscriptions/16e85b36-5c9d-48cc-a45d-c672a4393c36/resourceGroups/rsgagicmeetup1/providers/Microsoft.Network/applicationGateways/agwagicmeetup1"
+null_resource.Install_AGIC_Addon (local-exec):         "applicationGatewayId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rsgagicmeetup1/providers/Microsoft.Network/applicationGateways/agwagicmeetup1",
+null_resource.Install_AGIC_Addon (local-exec):         "effectiveApplicationGatewayId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rsgagicmeetup1/providers/Microsoft.Network/applicationGateways/agwagicmeetup1"
 null_resource.Install_AGIC_Addon (local-exec):       },
 null_resource.Install_AGIC_Addon (local-exec):       "enabled": true,
 null_resource.Install_AGIC_Addon (local-exec):       "identity": {
-null_resource.Install_AGIC_Addon (local-exec):         "clientId": "fdec3618-bb29-4d99-834a-9b8c0a6f771d",
-null_resource.Install_AGIC_Addon (local-exec):         "objectId": "3997c029-fb37-4204-a8de-ea2ecb2d3a22",
-null_resource.Install_AGIC_Addon (local-exec):         "resourceId": "/subscriptions/16e85b36-5c9d-48cc-a45d-c672a4393c36/resourcegroups/rsg-dfitcfr-lab-agic-aksobjects1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/ingressapplicationgateway-aks-1"
+null_resource.Install_AGIC_Addon (local-exec):         "clientId": "00000000-0000-0000-0000-000000000000",
+null_resource.Install_AGIC_Addon (local-exec):         "objectId": "00000000-0000-0000-0000-000000000000",
+null_resource.Install_AGIC_Addon (local-exec):         "resourceId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rsg-dfitcfr-lab-agic-aksobjects1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/ingressapplicationgateway-aks-1"
 null_resource.Install_AGIC_Addon (local-exec):       }
 null_resource.Install_AGIC_Addon (local-exec):     },
 null_resource.Install_AGIC_Addon (local-exec):     "kubeDashboard": {
@@ -59,13 +59,13 @@ null_resource.Install_AGIC_Addon (local-exec):       "identity": null
 null_resource.Install_AGIC_Addon (local-exec):     },
 null_resource.Install_AGIC_Addon (local-exec):     "omsagent": {
 null_resource.Install_AGIC_Addon (local-exec):       "config": {
-null_resource.Install_AGIC_Addon (local-exec):         "logAnalyticsWorkspaceResourceID": "/subscriptions/16e85b36-5c9d-48cc-a45d-c672a4393c36/resourceGroups/rsg-dffr-lab-subsetupagiclog/providers/Microsoft.OperationalInsights/workspaces/law-dffr-lab-subsetupagiclog16e85b36"
+null_resource.Install_AGIC_Addon (local-exec):         "logAnalyticsWorkspaceResourceID": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rsg-dffr-lab-subsetupagiclog/providers/Microsoft.OperationalInsights/workspaces/law-dffr-lab-subsetupagiclog16e85b36"
 null_resource.Install_AGIC_Addon (local-exec):       },
 null_resource.Install_AGIC_Addon (local-exec):       "enabled": true,
 null_resource.Install_AGIC_Addon (local-exec):       "identity": {
 null_resource.Install_AGIC_Addon (local-exec):         "clientId": "5cb45c0d-4f99-4473-948d-448ac8dab267",
 null_resource.Install_AGIC_Addon (local-exec):         "objectId": "41453bb4-c260-424a-a5a3-d668e3c098df",
-null_resource.Install_AGIC_Addon (local-exec):         "resourceId": "/subscriptions/16e85b36-5c9d-48cc-a45d-c672a4393c36/resourcegroups/rsg-dfitcfr-lab-agic-aksobjects1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/omsagent-aks-1"
+null_resource.Install_AGIC_Addon (local-exec):         "resourceId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rsg-dfitcfr-lab-agic-aksobjects1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/omsagent-aks-1"
 null_resource.Install_AGIC_Addon (local-exec):       }
 null_resource.Install_AGIC_Addon (local-exec):     }
 null_resource.Install_AGIC_Addon (local-exec):   },
@@ -125,7 +125,7 @@ null_resource.Install_AGIC_Addon (local-exec):       "upgradeSettings": {
 null_resource.Install_AGIC_Addon (local-exec):         "maxSurge": null
 null_resource.Install_AGIC_Addon (local-exec):       },
 null_resource.Install_AGIC_Addon (local-exec):       "vmSize": "standard_d2s_v4",
-null_resource.Install_AGIC_Addon (local-exec):       "vnetSubnetId": "/subscriptions/16e85b36-5c9d-48cc-a45d-c672a4393c36/resourceGroups/rsgagicmeetup1/providers/Microsoft.Network/virtualNetworks/vnetagicmeetup1/subnets/subFEagicmeetup1",
+null_resource.Install_AGIC_Addon (local-exec):       "vnetSubnetId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rsgagicmeetup1/providers/Microsoft.Network/virtualNetworks/vnetagicmeetup1/subnets/subFEagicmeetup1",
 null_resource.Install_AGIC_Addon (local-exec):       "workloadRuntime": null
 null_resource.Install_AGIC_Addon (local-exec):     }
 null_resource.Install_AGIC_Addon (local-exec):   ],
@@ -168,13 +168,13 @@ null_resource.Install_AGIC_Addon (local-exec):   "extendedLocation": null,
 null_resource.Install_AGIC_Addon (local-exec):   "fqdn": "aksagiclab-2a8095ca.hcp.westeurope.azmk8s.io",
 null_resource.Install_AGIC_Addon (local-exec):   "fqdnSubdomain": null,
 null_resource.Install_AGIC_Addon (local-exec):   "httpProxyConfig": null,
-null_resource.Install_AGIC_Addon (local-exec):   "id": "/subscriptions/16e85b36-5c9d-48cc-a45d-c672a4393c36/resourcegroups/rsgagicmeetup1/providers/Microsoft.ContainerService/managedClusters/aks-1",
+null_resource.Install_AGIC_Addon (local-exec):   "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rsgagicmeetup1/providers/Microsoft.ContainerService/managedClusters/aks-1",
 null_resource.Install_AGIC_Addon (local-exec):   "identity": {
 null_resource.Install_AGIC_Addon (local-exec):     "principalId": null,
 null_resource.Install_AGIC_Addon (local-exec):     "tenantId": null,
 null_resource.Install_AGIC_Addon (local-exec):     "type": "UserAssigned",
 null_resource.Install_AGIC_Addon (local-exec):     "userAssignedIdentities": {
-null_resource.Install_AGIC_Addon (local-exec):       "/subscriptions/16e85b36-5c9d-48cc-a45d-c672a4393c36/resourceGroups/rsgagicmeetup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uaiaks-1": {
+null_resource.Install_AGIC_Addon (local-exec):       "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rsgagicmeetup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uaiaks-1": {
 null_resource.Install_AGIC_Addon (local-exec):         "clientId": "6ac30508-fffd-4c8a-9583-c76f8e408279",
 null_resource.Install_AGIC_Addon (local-exec):         "principalId": "45019b33-b763-4ff5-937c-235cdf3c99b6"
 null_resource.Install_AGIC_Addon (local-exec):       }
@@ -182,9 +182,9 @@ null_resource.Install_AGIC_Addon (local-exec):     }
 null_resource.Install_AGIC_Addon (local-exec):   },
 null_resource.Install_AGIC_Addon (local-exec):   "identityProfile": {
 null_resource.Install_AGIC_Addon (local-exec):     "kubeletidentity": {
-null_resource.Install_AGIC_Addon (local-exec):       "clientId": "db181748-14c7-48b0-ae60-22797b3f46fe",
-null_resource.Install_AGIC_Addon (local-exec):       "objectId": "e7cf4e2a-f278-4a72-9cc7-8efa5a891951",
-null_resource.Install_AGIC_Addon (local-exec):       "resourceId": "/subscriptions/16e85b36-5c9d-48cc-a45d-c672a4393c36/resourcegroups/rsg-dfitcfr-lab-agic-aksobjects1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aks-1-agentpool"
+null_resource.Install_AGIC_Addon (local-exec):       "clientId": "00000000-0000-0000-0000-000000000000",
+null_resource.Install_AGIC_Addon (local-exec):       "objectId": "00000000-0000-0000-0000-000000000000",
+null_resource.Install_AGIC_Addon (local-exec):       "resourceId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rsg-dfitcfr-lab-agic-aksobjects1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aks-1-agentpool"
 null_resource.Install_AGIC_Addon (local-exec):     }
 null_resource.Install_AGIC_Addon (local-exec):   },
 null_resource.Install_AGIC_Addon (local-exec):   "kubernetesVersion": "1.20.9",
@@ -208,7 +208,7 @@ null_resource.Install_AGIC_Addon (local-exec):     "loadBalancerProfile": {
 null_resource.Install_AGIC_Addon (local-exec):       "allocatedOutboundPorts": null,
 null_resource.Install_AGIC_Addon (local-exec):       "effectiveOutboundIPs": [
 null_resource.Install_AGIC_Addon (local-exec):         {
-null_resource.Install_AGIC_Addon (local-exec):           "id": "/subscriptions/16e85b36-5c9d-48cc-a45d-c672a4393c36/resourceGroups/rsg-dfitcfr-lab-agic-aksobjects1/providers/Microsoft.Network/publicIPAddresses/c6a08791-2187-4911-80fd-2f39cff813ad",
+null_resource.Install_AGIC_Addon (local-exec):           "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rsg-dfitcfr-lab-agic-aksobjects1/providers/Microsoft.Network/publicIPAddresses/c6a08791-2187-4911-80fd-2f39cff813ad",
 null_resource.Install_AGIC_Addon (local-exec):           "resourceGroup": "rsg-dfitcfr-lab-agic-aksobjects1"
 null_resource.Install_AGIC_Addon (local-exec):         }
 null_resource.Install_AGIC_Addon (local-exec):       ],
