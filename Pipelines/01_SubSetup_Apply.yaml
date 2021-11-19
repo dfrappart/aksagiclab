@@ -18,8 +18,8 @@ pool:
 # Variables for the job
 
 variables:
-- group: CSILab
-- group: CSILabKV
+- group: AgicLab
+- group: AgicLabKV
 
 # Stages
 
