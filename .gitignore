@@ -15,4 +15,5 @@ terraformbackendconfig.tf
 /Modules
 backend.hcl
 /armextract/
+.terraform.lock.hcl
 
