@@ -1,0 +1,189 @@
+#Pipeline name
+
+name: '03_Infra_AKS_Apply'
+
+
+#Parameters for the pipeline
+
+# CD Trigger
+
+trigger:
+  none
+
+# Job Workers config
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+# Variables for the job
+
+variables:
+- group: AgicLab
+- group: AgicLabKV
+
+# Stages
+
+stages:
+  - stage: terraform_apply_stage
+    jobs: 
+    - job: terraform_plan
+      continueOnError: false
+      # Job step
+      steps:
+      
+      - script: |
+         echo Getting Terraform
+         echo "Building TFURI for DL"
+         echo "current terraform version is $TFVer"
+         export TFuri1="https://releases.hashicorp.com/terraform/$TFVer/terraform_"
+         export TFuriTemp=$TFuri1$TFVer
+         export TFuriend="_linux_amd64.zip"
+         export TFuri=$TFuriTemp$TFuriend
+         echo "TFDL URI is $TFuri"
+         wget $TFuri
+         
+         echo "building TFZip name"
+         export TFZip1="terraform_"
+         export TFZipEnd="_linux_amd64.zip"
+         export TFZipTemp=$TFZip1$TFVer
+         export ZIPName=$TFZipTemp$TFZipEnd
+         echo "Zip name is $ZIPName"
+         unzip -a $ZIPName
+         
+         sudo mv ./terraform /usr/local/bin/terraform
+         
+         terraform version
+         
+        displayName: 'Download and update Terraform'
+        env:
+          TFVer: $(TFVer)
+      
+      - script: |
+         echo '######################################################'   
+         echo 'Init and plan Terraform'
+         echo '######################################################'
+         echo
+         echo '######################################################'    
+         echo 'Init Terraform'
+         echo
+         terraform init \
+         -backend-config="key=${key}" \
+         -backend-config="access_key=${access_key}" \
+         -backend-config="container_name=${container_name}" \
+         -backend-config="storage_account_name=${storage_account_name}" \
+         -no-color
+         echo 'State is stored in:'${key}
+         echo
+         echo '######################################################'
+         echo 'check terraform'
+         terraform version
+         echo
+         echo 'check files'
+         ls -a
+         echo
+         echo 'terraform plan'
+         terraform plan \
+         -var-file="Lab.tfvars" \
+         -var SubsetupAccessKey=${access_key} \
+         -var SubsetupKey=${SubsetupKey} \
+         -var SubsetupContainerName=${container_name} \
+         -var SubsetupSTOAName=${storage_account_name} \
+         -var AzureTenantID=${AzureTenantID} \
+         -var AzureClientSecret=${AzureClientSecret} \
+         -var AzureClientID=${AzureClientID} \
+         -var AzureSubscriptionID=${AzureSubscriptionID}
+    
+        workingDirectory: 'Terraformconfig/01_Infra_AKS'
+        displayName: 'Terraform init & Plan'
+        env:
+          AzureClientID: $(TFId)
+          AzureClientSecret: $(TFSecret)
+          AzureSubscriptionID: $(SubscriptionId)
+          AzureTenantID: $(TenantId)
+          key: $(InfraState)
+          access_key: $(TFStateSTOAK)
+          container_name: $(SubSetupContainerName)
+          storage_account_name: $(SubSetupSTAName)
+          SubsetupKey: $(SubSetupState)
+
+    - job: terraform_apply
+      continueOnError: false
+      # Job step
+      steps:
+      
+      - script: |
+         echo Getting Terraform
+         echo "Building TFURI for DL"
+         echo "current terraform version is $TFVer"
+         export TFuri1="https://releases.hashicorp.com/terraform/$TFVer/terraform_"
+         export TFuriTemp=$TFuri1$TFVer
+         export TFuriend="_linux_amd64.zip"
+         export TFuri=$TFuriTemp$TFuriend
+         echo "TFDL URI is $TFuri"
+         wget $TFuri
+         
+         echo "building TFZip name"
+         export TFZip1="terraform_"
+         export TFZipEnd="_linux_amd64.zip"
+         export TFZipTemp=$TFZip1$TFVer
+         export ZIPName=$TFZipTemp$TFZipEnd
+         echo "Zip name is $ZIPName"
+         unzip -a $ZIPName
+         
+         sudo mv ./terraform /usr/local/bin/terraform
+         
+         terraform version
+         
+        displayName: 'Download and update Terraform'
+        env:
+          TFVer: $(TFVer)
+      
+      - script: |
+         echo '######################################################'   
+         echo 'Init and apply Terraform'
+         echo '######################################################'
+         echo
+         echo '######################################################'    
+         echo 'Init Terraform'
+         echo
+         terraform init \
+         -backend-config="key=${key}" \
+         -backend-config="access_key=${access_key}" \
+         -backend-config="container_name=${container_name}" \
+         -backend-config="storage_account_name=${storage_account_name}" \
+         -no-color
+         echo 'State is stored in:'${key}
+         echo
+         echo '######################################################'
+         echo 'check terraform'
+         terraform version
+         echo
+         echo 'check files'
+         ls -a
+         echo
+         echo 'terraform apply'
+         terraform apply \
+         -var-file="Lab.tfvars" \
+         -var SubsetupAccessKey=${access_key} \
+         -var SubsetupKey=${SubsetupKey} \
+         -var SubsetupContainerName=${container_name} \
+         -var SubsetupSTOAName=${storage_account_name} \
+         -var AzureTenantID=${AzureTenantID} \
+         -var AzureClientSecret=${AzureClientSecret} \
+         -var AzureClientID=${AzureClientID} \
+         -var AzureSubscriptionID=${AzureSubscriptionID} \
+         -auto-approve
+    
+        workingDirectory: 'Terraformconfig/01_Infra_AKS'
+        displayName: 'Terraform init & Apply'
+        env:
+          AzureClientID: $(TFId)
+          AzureClientSecret: $(TFSecret)
+          AzureSubscriptionID: $(SubscriptionId)
+          AzureTenantID: $(TenantId)
+          key: $(InfraState)
+          access_key: $(TFStateSTOAK)
+          container_name: $(SubSetupContainerName)
+          storage_account_name: $(SubSetupSTAName)
+          SubsetupKey: $(SubSetupState)
+
