@@ -231,7 +231,7 @@ resource "helm_release" "agic" {
 
 ######################################################################
 # installing CertManager from helm
-
+/*
 resource "helm_release" "certmanager" {
   name                                = "cert-manager"
   repository                          = "https://charts.jetstack.io"
