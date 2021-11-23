@@ -12,7 +12,6 @@ terraformbackendconfig.tf
 /11_Scripts
 /04_Velero
 /10_Tad
-/Modules
 backend.hcl
 /armextract/
 .terraform.lock.hcl
