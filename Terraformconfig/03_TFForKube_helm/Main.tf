@@ -186,9 +186,6 @@ resource "helm_release" "podidentity" {
 
   }
 
-  depends_on = [
-    helm_release.certmanager
-  ]
 
 }
 
