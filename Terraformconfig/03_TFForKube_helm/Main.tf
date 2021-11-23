@@ -139,7 +139,7 @@ resource "azurerm_subnet_route_table_association" "agwtoaksroutetable" {
 
 ######################################################################
 # installing kured from helm
-
+/*
 resource "helm_release" "kured" {
   name                                = "kured"
   repository                          = "https://weaveworks.github.io/kured"
@@ -163,6 +163,7 @@ resource "helm_release" "kured" {
     value                             = var.HelmKuredSensitiveParamValue
   }
 }
+*/
 ######################################################################
 # installing pod identity from helm
 
@@ -255,7 +256,7 @@ resource "helm_release" "certmanager" {
 
 }
 
-
+/*
 ######################################################################
 # installing Kubecost from helm
 

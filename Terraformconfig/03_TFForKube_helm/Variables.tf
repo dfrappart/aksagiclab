@@ -145,11 +145,13 @@ variable "HelmKuredSensitiveParamName" {
   default                       = "extraArgs.slack-hook-url"
 }
 
+/*
 variable "HelmKuredSensitiveParamValue" {
   type                          = string
   description                   = "The webhook that trigger the logic app responsible to send the notificaiton to teams" 
 
 }
+*/
 
 variable "HelmKuredParam" {
   type                  = map
