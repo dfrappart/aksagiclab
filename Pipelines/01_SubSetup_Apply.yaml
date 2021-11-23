@@ -167,7 +167,7 @@ stages:
      
     
         workingDirectory: 'Terraformconfig/00_SubSetup'
-        displayName: 'Terraform init & Plan'
+        displayName: 'Terraform init & Apply'
         env:
           AzureClientID: $(TFId)
           AzureClientSecret: $(TFSecret)
