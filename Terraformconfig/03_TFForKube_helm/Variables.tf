@@ -299,8 +299,11 @@ variable "HelmkubecostSensitiveParamName" {
   default                       = ""
 }
 
+/*
 variable "HelmKubeCostSensitiveParamValue" {
   type                          = string
   description                   = "The token value used by kubecost" 
 
 }
+
+*/
