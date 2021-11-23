@@ -121,7 +121,6 @@ stages:
          echo
          echo 'terraform plan'
          terraform plan \
-         -var-file="Lab.tfvars" \
          -var statestoakey=${access_key} \
          -var statekeyAKSClusState=${AKSsetupKey} \
          -var statecontainer=${container_name} \
