@@ -131,16 +131,26 @@ output "BESubnetFull_VNet2_Output" {
 
 # NSG Bastion Subnet
 
-output "AzureBastionNSG_VNet1_FullOutput" {
-  value             = module.AKSVNet[0].AzureBastionNSGFullOutput
+output "AzureBastionNSG_VNet1_Name" {
+  value             = module.AKSVNet[0].AzureBastionNSGName
   sensitive         = true
 }
 
-output "AzureBastionNSG_VNet2_FullOutput" {
-  value             = module.AKSVNet[1].AzureBastionNSGFullOutput
+output "AzureBastionNSG_VNet2_Name" {
+  value             = module.AKSVNet[1].AzureBastionNSGName
   sensitive         = true
 }
 
+
+output "AzureBastionNSG_VNet1_Id" {
+  value             = module.AKSVNet[0].AzureBastionNSGId
+  sensitive         = true
+}
+
+output "AzureBastionNSG_VNet2_Id" {
+  value             = module.AKSVNet[1].AzureBastionNSGId
+  sensitive         = true
+}
 # NSG AppGW Subnet
 
 output "AGWSubnetNSG_VNet1_FullOutput" {
@@ -181,16 +191,25 @@ output "BESubnetNSG_VNet2_FullOutput" {
 ##############################################################
 #Output for Bastion Host
 
-output "SpokeBastion_VNET1_FullOutput" {
-  value             = module.AKSVNet[0].SpokeBastionFullOutput
+output "SpokeBastion_VNET1_Name" {
+  value             = module.AKSVNet[0].SpokeBastionName
   sensitive         = true
 }
 
-output "SpokeBastion_VNET2_FullOutput" {
-  value             = module.AKSVNet[1].SpokeBastionFullOutput
+output "SpokeBastion_VNET2_Name" {
+  value             = module.AKSVNet[1].SpokeBastionName
   sensitive         = true
 }
 
+output "SpokeBastion_VNET1_IPConfig" {
+  value             = module.AKSVNet[0].SpokeBastionIpConfig
+  sensitive         = true
+}
+
+output "SpokeBastion_VNET2_IPConfig" {
+  value             = module.AKSVNet[1].SpokeBastionIpConfig
+  sensitive         = true
+}
 ######################################################
 # Output for the AKS module with RBAC enabled
 
